@@ -1,4 +1,4 @@
-# EC2 Hello World - AWS template
+# AWS EC2 Hello World template
 
 ## Description
 
