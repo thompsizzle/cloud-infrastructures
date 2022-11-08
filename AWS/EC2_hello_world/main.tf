@@ -107,3 +107,60 @@ resource "aws_internet_gateway" "vpc_igw_tf" {
     Name = "vpc-igw-tf"
   }
 }
+
+# Security group to access instances inside the public subnets using HTTP
+resource "aws_security_group" "ec2_public_access_tf" {
+  name        = "OtisEC2PublicAccess"
+  description = "Allow HTTP inbound"
+  vpc_id      = aws_vpc.vpc_tf.id
+
+  ingress {
+    description = "SSH from all IPv4"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "HTTPS to VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Route table for web subnets
+resource "aws_route_table" "rt_web_igw_tf" {
+  vpc_id = aws_vpc.vpc_tf.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.vpc_igw_tf.id
+  }
+
+  tags = {
+    Name = "rt-web-igw-tf"
+  }
+}
+
+# Associate route table with web a subnet
+resource "aws_route_table_association" "rt_associate_web_a_tf" {
+  subnet_id      = aws_subnet.sn_web_a_tf.id
+  route_table_id = aws_route_table.rt_web_igw_tf.id
+}
+
+# Associate route table with web b subnet
+resource "aws_route_table_association" "rt_associate_web_b_tf" {
+  subnet_id      = aws_subnet.sn_web_b_tf.id
+  route_table_id = aws_route_table.rt_web_igw_tf.id
+}
