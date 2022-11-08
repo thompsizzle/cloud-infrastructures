@@ -164,3 +164,13 @@ resource "aws_route_table_association" "rt_associate_web_b_tf" {
   subnet_id      = aws_subnet.sn_web_b_tf.id
   route_table_id = aws_route_table.rt_web_igw_tf.id
 }
+
+resource "aws_network_interface" "eni_a_tf" {
+  subnet_id       = aws_subnet.sn_web_a_tf.id
+  private_ips     = ["10.17.0.100"]
+  security_groups = [aws_security_group.ec2_public_access_tf.id]
+
+  tags = {
+    Name = "ec2-web-a-eni-tf"
+  }
+}
