@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+      - name: Install Apache.
+        yum:
+          name:
+            - httpd
+            - httpd-devel
+          state: latest
+
+      - name: Make sure Apache is started now and at boot.
+        service:
+          name: httpd
+          state: started
+          enabled: yes
+
+      - name: Copy using inline content
+        copy:
+          content: 'Hello World'
+          dest: /var/www/html/index.html
