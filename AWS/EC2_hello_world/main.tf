@@ -1,6 +1,6 @@
 # Create VPC
 resource "aws_vpc" "vpc_tf" {
-  cidr_block                       = "10.17.0.0/16"
+  cidr_block                       = var.address_space
   instance_tenancy                 = "default"
   assign_generated_ipv6_cidr_block = true
 
