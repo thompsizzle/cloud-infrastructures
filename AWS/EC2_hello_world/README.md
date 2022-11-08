@@ -34,6 +34,38 @@ Run the following command to generate SSH key.
 
 Note: .gitignore has references to this key using the exact name of the key in the command above. Edit the key name, edit the references in .gitignore, under comment '# ssh keys'.
 
+### Available variables
+
+Customize Terraform variables in terraform.tfvars.
+
+AWS region:
+
+    aws_region          = "us-east-1"
+
+VPC CIDR block:
+
+    address_space       = "10.17.0.0/16"
+
+Choose 2 availability zones within region:
+
+    availability_zone_1 = "us-east-1a"
+    availability_zone_2 = "us-east-1b"
+
+Define map of amis based on region:
+
+    aws_amis = {
+        "us-east-1" = "ami-0cff7528ff583bf9a"
+        "us-east-2" = "ami-0ebc8f6f580a04647"
+        "us-west-1" = "ami-008b09448b998a562"
+        "us-west-2" = "ami-008b09448b998a562"
+    }
+
+EC2 instance type:
+
+    ec2_instance_type = "t2.micro"
+
+Be careful when choosing the EC2 instance type. This is what incurs the cost for this infrastructure.
+
 ### Initialize Terraform
 
 Initialize a working directory that contains a Terraform configuration:
