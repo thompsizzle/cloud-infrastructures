@@ -26,3 +26,9 @@ variable "aws_amis" {
   description = "A map of region-specific AMI IDs"
   type        = map(any)
 }
+
+variable "ec2_instance_type" {
+  description = "Ec2 instance type"
+  type        = string
+  default     = "t2.micro"
+}
