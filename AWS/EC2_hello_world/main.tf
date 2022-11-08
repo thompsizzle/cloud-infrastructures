@@ -13,7 +13,7 @@ resource "aws_vpc" "vpc_tf" {
 resource "aws_subnet" "sn_web_a_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = "10.17.0.0/20"
-  availability_zone       = "us-east-1a"
+  availability_zone       = var.availability_zone_1
   map_public_ip_on_launch = true
 
   tags = {
@@ -25,7 +25,7 @@ resource "aws_subnet" "sn_web_a_tf" {
 resource "aws_subnet" "sn_app_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.16.0/20"
-  availability_zone = "us-east-1a"
+  availability_zone = var.availability_zone_1
 
   tags = {
     Name = "sn-app-a-tf"
@@ -36,7 +36,7 @@ resource "aws_subnet" "sn_app_a_tf" {
 resource "aws_subnet" "sn_db_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.32.0/20"
-  availability_zone = "us-east-1a"
+  availability_zone = var.availability_zone_1
 
   tags = {
     Name = "sn-db-a-tf"
@@ -47,7 +47,7 @@ resource "aws_subnet" "sn_db_a_tf" {
 resource "aws_subnet" "sn_reserved_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.48.0/20"
-  availability_zone = "us-east-1a"
+  availability_zone = var.availability_zone_1
 
   tags = {
     Name = "sn-reserved-a-tf"
@@ -58,7 +58,7 @@ resource "aws_subnet" "sn_reserved_a_tf" {
 resource "aws_subnet" "sn_web_b_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = "10.17.64.0/20"
-  availability_zone       = "us-east-1b"
+  availability_zone       = var.availability_zone_2
   map_public_ip_on_launch = true
 
   tags = {
@@ -70,7 +70,7 @@ resource "aws_subnet" "sn_web_b_tf" {
 resource "aws_subnet" "sn_app_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.80.0/20"
-  availability_zone = "us-east-1b"
+  availability_zone = var.availability_zone_2
 
   tags = {
     Name = "sn-app-b-tf"
@@ -81,7 +81,7 @@ resource "aws_subnet" "sn_app_b_tf" {
 resource "aws_subnet" "sn_db_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.96.0/20"
-  availability_zone = "us-east-1b"
+  availability_zone = var.availability_zone_2
 
   tags = {
     Name = "sn-db-b-tf"
@@ -92,7 +92,7 @@ resource "aws_subnet" "sn_db_b_tf" {
 resource "aws_subnet" "sn_reserved_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = "10.17.112.0/20"
-  availability_zone = "us-east-1b"
+  availability_zone = var.availability_zone_2
 
   tags = {
     Name = "sn-reserved-b-tf"
