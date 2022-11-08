@@ -18,8 +18,6 @@ Before using this template, you need to configure your AWS credentials.
 
     aws configure
 
-Be sure to set the region to the same region that is specified within the template. Currently, the default AWS region is set to us-west-1.
-
 For more help configuring your AWS credentials: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
 
 ### Install Terraform CLI
