@@ -1,6 +1,8 @@
-# Collection of cloud infrastructure templates for AWS
+# EC2 Hello World - AWS template
 
-This repository hosts a collection of templates that can be used to create various cloud infrastructures in AWS.
+## Description
+
+Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the console.
 
 ## Installation and Usage
 
