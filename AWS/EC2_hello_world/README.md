@@ -83,3 +83,7 @@ Create an execution plan and preview the changes that Terraform plans to make to
 Execute the actions proposed in a Terraform plan:
 
     terraform apply
+
+### Terraform output
+
+The console will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet.
