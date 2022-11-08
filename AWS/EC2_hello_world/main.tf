@@ -181,7 +181,7 @@ resource "aws_network_interface" "eni_a_tf" {
 }
 
 resource "aws_instance" "ec2_tf" {
-  ami           = "ami-0cff7528ff583bf9a"
+  ami           = lookup(var.aws_amis, var.aws_region)
   instance_type = "t2.micro"
   key_name      = aws_key_pair.ec2_ssh_key_tf.key_name
 
