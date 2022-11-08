@@ -1,0 +1,16 @@
+#!/bin/bash -xe
+
+# System Updates
+yum -y update
+yum -y upgrade
+
+# STEP 2 - Install system software - including Web and DB
+yum install -y mariadb-server httpd wget cowsay
+amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+
+# STEP 3 - Web and DB Servers Online - and set to startup
+systemctl enable httpd
+systemctl start httpd
+
+#!/bin/bash
+/bin/echo "<h1>Hello World</h1>" >> /var/www/html/index.html

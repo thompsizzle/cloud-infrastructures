@@ -193,4 +193,6 @@ resource "aws_instance" "ec2_tf" {
   credit_specification {
     cpu_credits = "unlimited"
   }
+
+  user_data = templatefile("user_data.tftpl", {})
 }
