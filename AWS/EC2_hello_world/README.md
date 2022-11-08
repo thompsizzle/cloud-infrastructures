@@ -26,6 +26,14 @@ Please install Terraform on your local machine. Click on the following link for 
 
 https://www.terraform.io/downloads
 
+### Create key for secure connections using SSH
+
+Run the following command to generate SSH key.
+
+    ssh-keygen -t rsa -C "example@gmail.com" -f ./ssh-key-tf
+
+Note: .gitignore has references to this key using the exact name of the key in the command above. Edit the key name, edit the references in .gitignore, under comment '# ssh keys'.
+
 ### Initialize Terraform
 
 Initialize a working directory that contains a Terraform configuration:

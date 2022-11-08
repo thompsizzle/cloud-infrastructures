@@ -139,6 +139,11 @@ resource "aws_security_group" "ec2_public_access_tf" {
   }
 }
 
+resource "aws_key_pair" "ec2_ssh_key_tf" {
+  key_name   = "ssh-key-tf"
+  public_key = file("ssh-key-tf.pub")
+}
+
 # Route table for web subnets
 resource "aws_route_table" "rt_web_igw_tf" {
   vpc_id = aws_vpc.vpc_tf.id
@@ -178,6 +183,7 @@ resource "aws_network_interface" "eni_a_tf" {
 resource "aws_instance" "ec2_tf" {
   ami           = "ami-0cff7528ff583bf9a"
   instance_type = "t2.micro"
+  key_name      = aws_key_pair.ec2_ssh_key_tf.key_name
 
   network_interface {
     network_interface_id = aws_network_interface.eni_a_tf.id
