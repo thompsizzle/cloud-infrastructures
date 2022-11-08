@@ -174,3 +174,17 @@ resource "aws_network_interface" "eni_a_tf" {
     Name = "ec2-web-a-eni-tf"
   }
 }
+
+resource "aws_instance" "ec2_tf" {
+  ami           = "ami-0cff7528ff583bf9a"
+  instance_type = "t2.micro"
+
+  network_interface {
+    network_interface_id = aws_network_interface.eni_a_tf.id
+    device_index         = 0
+  }
+
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+}
