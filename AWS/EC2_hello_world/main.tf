@@ -98,3 +98,12 @@ resource "aws_subnet" "sn_reserved_b_tf" {
     Name = "sn-reserved-b-tf"
   }
 }
+
+# Internet gateway attached to new VPC
+resource "aws_internet_gateway" "vpc_igw_tf" {
+  vpc_id = aws_vpc.vpc_tf.id
+
+  tags = {
+    Name = "vpc-igw-tf"
+  }
+}
