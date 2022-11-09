@@ -12,6 +12,9 @@ crash.log
 ssh-key-tf
 ssh-key-tf.pub
 
+# Infracost
+.infracost
+
 # Ignore any .tfvars files that are generated automatically for each Terraform run. Most
 # .tfvars files are managed as part of configuration and so should be included in
 # version control.
