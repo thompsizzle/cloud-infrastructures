@@ -26,6 +26,12 @@ Please install Terraform on your local machine. Click on the following link for 
 
 https://www.terraform.io/downloads
 
+### Install Ansible
+
+In order to run our Ansible Playbook, click on the following link for instructions:
+
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+
 ### Create key for secure connections using SSH
 
 Run the following command to generate SSH key.
@@ -87,3 +93,22 @@ Execute the actions proposed in a Terraform plan:
 ### Terraform output
 
 The terminal will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet. The instance will be unreachable, until after we run the Ansible playbook and configure the EC2 instance.
+
+### Update Ansible hosts file
+
+We need to take the public IP address that Terraform returned and update the IP address in hosts.ini:
+
+    [app]
+    44.204.150.246 <-- Replace with Terraform output IP address
+
+    [app:vars]
+    ansible_user=ec2-user
+    ansible_ssh_private_key_file=./ssh-key-tf
+
+To securely connect to the EC2 instance via SSH, we must tell ansible to use our SSH key.
+
+### Run the Ansible Playbook
+
+    ansible-playbook playbook.yml --limit app
+
+Once the Ansible Playbook finishes, visit the public IP address to see our web presence.
