@@ -110,7 +110,7 @@ resource "aws_internet_gateway" "vpc_igw_tf" {
 
 # Security group to access instances inside the public subnets using HTTP
 resource "aws_security_group" "ec2_public_access_tf" {
-  name        = "OtisEC2PublicAccess"
+  name        = "EC2PublicAccessTF"
   description = "Allow HTTP inbound"
   vpc_id      = aws_vpc.vpc_tf.id
 
