@@ -2,7 +2,7 @@
 
 ## Description
 
-Creates an AWS infrastructure with an EC2 instance, using Terraform. Returns the public IP address to the console. Ansible is provided in place of the EC2 instance user data file to configure the EC2 instance operating system and render Hello World.
+Creates an AWS infrastructure with an EC2 instance, using Terraform. Returns the public IP address to the terminal. Ansible is provided in place of the EC2 instance user data file to configure the EC2 instance operating system and render Hello World.
 
 ## Installation and Usage
 
@@ -86,4 +86,4 @@ Execute the actions proposed in a Terraform plan:
 
 ### Terraform output
 
-The console will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet. The instance will be unreachable, until after we run the Ansible playbook and configure the EC2 instance.
+The terminal will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet. The instance will be unreachable, until after we run the Ansible playbook and configure the EC2 instance.

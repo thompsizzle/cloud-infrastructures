@@ -2,7 +2,7 @@
 
 ## Description
 
-Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the console.
+Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the terminal.
 
 ## Installation and Usage
 
@@ -86,4 +86,4 @@ Execute the actions proposed in a Terraform plan:
 
 ### Terraform output
 
-The console will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet.
+The terminal will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet.
