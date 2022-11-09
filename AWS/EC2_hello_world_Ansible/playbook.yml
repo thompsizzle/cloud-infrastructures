@@ -1,22 +1,14 @@
 ---
 - hosts: all
   become: yes
+  vars_files:
+    - vars/main.yml
+
+  roles:
+    - { role: geerlingguy.apache }
 
   tasks:
-      - name: Install Apache.
-        yum:
-          name:
-            - httpd
-            - httpd-devel
-          state: latest
-
-      - name: Make sure Apache is started now and at boot.
-        service:
-          name: httpd
-          state: started
-          enabled: yes
-
       - name: Copy using inline content
         copy:
-          content: 'Hello World'
+          content: 'Hello Worlds'
           dest: /var/www/html/index.html

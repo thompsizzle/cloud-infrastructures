@@ -105,10 +105,17 @@ We need to take the public IP address that Terraform returned and update the IP 
     ansible_user=ec2-user
     ansible_ssh_private_key_file=./ssh-key-tf
 
-To securely connect to the EC2 instance via SSH, we must tell ansible to use our SSH key.
+To securely connect to the EC2 instance via SSH, we tell ansible to use our SSH key.
 
 ### Run the Ansible Playbook
+
+Note: It may take up to five minutes for the EC2 instance to become reachable via SSH.
 
     ansible-playbook playbook.yml --limit app
 
 Once the Ansible Playbook finishes, visit the public IP address to see our web presence.
+
+### Ansible roles
+
+    roles:
+        - { role: geerlingguy.apache }
