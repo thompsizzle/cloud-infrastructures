@@ -165,6 +165,7 @@ resource "aws_route_table_association" "rt_associate_web_b_tf" {
   route_table_id = aws_route_table.rt_web_igw_tf.id
 }
 
+# Launch template for auto scaling group
 resource "aws_launch_template" "lt_tf" {
   name          = "lt-tf"
   image_id      = lookup(var.aws_amis, var.aws_region)
@@ -188,6 +189,7 @@ resource "aws_launch_template" "lt_tf" {
   user_data = filebase64("user_data.tftpl")
 }
 
+# Load balancer target group
 resource "aws_lb_target_group" "lb_tg_tf" {
   name     = "lb-tg-tf"
   port     = 80
@@ -195,6 +197,7 @@ resource "aws_lb_target_group" "lb_tg_tf" {
   vpc_id   = aws_vpc.vpc_tf.id
 }
 
+# Load balancer
 resource "aws_lb" "lb_tf" {
   name               = "lb-tf"
   internal           = false
@@ -210,6 +213,7 @@ resource "aws_lb" "lb_tf" {
   enable_deletion_protection = false
 }
 
+# Load balancer listener
 resource "aws_lb_listener" "lb_listener_tf" {
   load_balancer_arn = aws_lb.lb_tf.arn
   port              = "80"
@@ -221,6 +225,7 @@ resource "aws_lb_listener" "lb_listener_tf" {
   }
 }
 
+# Auto scaling group
 resource "aws_autoscaling_group" "asg_tf" {
   name = "asg-tf"
   vpc_zone_identifier = [
