@@ -1,3 +1,5 @@
+![version](https://img.shields.io/badge/aws%20provider%20version-4.38.0-blue)
+
 # AWS EC2 Hello World template
 
 ## Description
