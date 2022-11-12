@@ -89,3 +89,34 @@ Execute the actions proposed in a Terraform plan:
 ### Terraform output
 
 The terminal will output the public IP address of the EC2 instance after execution of `terraform apply`. Copy the IP address and paste into browser to visit EC2 instance over the public internet.
+
+## Least privilege access
+
+Instead of using the credentials of your IAM user with administrator privileges, use an IAM user with much less permission. We should use an IAM user with just enough permission to build the infrastructure we have defined in this template. If you would like to practice the principle of least privilege, follow these steps.
+
+### Create an IAM policy
+
+Create an IAM policy that contains the following:
+
+IAM policy name - EC2HelloWorld
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "VisualEditor0",
+                "Effect": "Allow",
+                "Action": [
+                    "iam:*",
+                    "ec2:*"
+                ],
+                "Resource": "*"
+            }
+        ]
+    }
+
+Here, we are creating a policy that can be attached to a user. This policy only allows for actions with IAM and EC2. Considering the administrator user has actions for hundreds of AWS services, this is much more secure in case the credentials for this user are ever compromised.
+
+### Attach policy to new IAM user
+
+Attach your EC2HelloWorld policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
