@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/aws%20provider%20version-4.38.0-blue)
+![version](https://img.shields.io/badge/aws%20provider%20version-4.39.0-blue)
 
 # AWS EC2 Hello World with Auto Scaling Group and Load Balancer
 
