@@ -48,7 +48,10 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
 
 # Add object to bucket
 resource "aws_s3_object" "object_index" {
-  bucket = aws_s3_bucket.bucket_tf.bucket
-  key    = "index.html"
-  source = "bucket_objects/index.html"
+  bucket       = aws_s3_bucket.bucket_tf.bucket
+  key          = "index.html"
+  source       = "bucket_objects/index.html"
+  content_type = "text/html"
+
+  etag = filemd5("bucket_objects/index.html")
 }
