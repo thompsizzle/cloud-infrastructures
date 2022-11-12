@@ -11,6 +11,7 @@ Name | Description | Cost
 --- | --- | ---
 [EC2 Hello World](https://github.com/thompsizzle/cloud-infrastructures/tree/main/AWS/EC2_hello_world)|Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the terminal.|$9.27/month
 [EC2 Hello World with Ansible](https://github.com/thompsizzle/cloud-infrastructures/tree/main/AWS/EC2_hello_world_Ansible)|Creates an AWS infrastructure with an EC2 instance, using Terraform. Returns the public IP address to the terminal. Ansible is provided in place of the EC2 instance user data file to configure the EC2 instance operating system and render Hello World.|$9.27/month
+[EC2 Hello World with ASG](https://github.com/thompsizzle/cloud-infrastructures/tree/main/AWS/EC2_hello_world_ASG)|Creates an AWS infrastructure with two EC2 instances, which displays Hello World. These two EC2 instances are managed by an auto scaling group. A load balancer is associated with the auto scaling group to distribute traffic evenly between instances. Returns the DNS name of the load balancer to the terminal.|$33.36/month
 
 
 ## Monthly cost tool
