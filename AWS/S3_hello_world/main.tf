@@ -1,6 +1,6 @@
 # Create S3 bucket
 resource "aws_s3_bucket" "bucket_tf" {
-  bucket = "my-tf-test-bucket32131"
+  bucket = var.s3_bucket
 
   tags = {
     Name        = "My bucket"
