@@ -27,6 +27,14 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   policy = data.aws_iam_policy_document.allow_access_from_another_account.json
 }
 
+# Enable object versioning
+resource "aws_s3_bucket_versioning" "versioning_tf" {
+  bucket = aws_s3_bucket.bucket_tf.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 # Bucket policy document
 data "aws_iam_policy_document" "allow_access_from_another_account" {
   statement {
