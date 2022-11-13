@@ -90,8 +90,6 @@ Instead of using the credentials of your IAM user with administrator privileges,
 
 Create an IAM policy that contains the following:
 
-IAM policy name - EC2HelloWorld
-
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -109,8 +107,8 @@ IAM policy name - EC2HelloWorld
         ]
     }
 
-Here, we are creating a policy that can be attached to a user. This policy only allows for actions with IAM and EC2. Considering the administrator user has actions for hundreds of AWS services, this is much more secure in case the credentials for this user are ever compromised.
+Here, we are creating a policy that can be attached to a user. This policy only allows for actions with IAM, EC2, ELB and ASG. Considering the administrator user has permission to all actions for hundreds of AWS services, this is more secure in case the credentials for this user are ever compromised.
 
 ### Attach policy to new IAM user
 
-Attach your EC2HelloWorld policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
+Attach your new policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.

@@ -1,10 +1,10 @@
 ![version](https://img.shields.io/badge/aws%20provider%20version-4.39.0-blue)
 
-# AWS EC2 Hello World with Auto Scaling Group and Load Balancer
+# AWS S3 Hello World static website
 
 ## Description
 
-Creates an AWS infrastructure with two EC2 instances, which displays Hello World. These two EC2 instances are managed by an auto scaling group. A load balancer is associated with the auto scaling group to distribute traffic evenly between instances. Returns the DNS name of the load balancer to the terminal.
+Creates a S3 bucket configured to host a static website. A bucket policy is added which is required for the static website to be accessible to the public. An index.html file is uploaded to the bucket as an object to act as the home page of the static website.
 
 ## Installation and Usage
 
@@ -32,33 +32,7 @@ https://www.terraform.io/downloads
 
 Customize Terraform variables in terraform.tfvars.
 
-AWS region:
-
-    aws_region          = "us-east-1"
-
-VPC CIDR block:
-
-    address_space       = "10.17.0.0/16"
-
-Choose 2 availability zones within region:
-
-    availability_zone_1 = "us-east-1a"
-    availability_zone_2 = "us-east-1b"
-
-Define map of amis based on region:
-
-    aws_amis = {
-        "us-east-1" = "ami-0cff7528ff583bf9a"
-        "us-east-2" = "ami-0ebc8f6f580a04647"
-        "us-west-1" = "ami-008b09448b998a562"
-        "us-west-2" = "ami-008b09448b998a562"
-    }
-
-EC2 instance type:
-
-    ec2_instance_type = "t2.micro"
-
-Be careful when choosing the EC2 instance type. This is what incurs the cost for this infrastructure.
+Coming soon.
 
 ### Initialize Terraform
 
@@ -80,7 +54,7 @@ Execute the actions proposed in a Terraform plan:
 
 ### Terraform output
 
-The terminal will output the DNS name of the load balancer after execution of `terraform apply`. Copy the DNS name and paste into browser to visit one of our EC2 instances over the public internet.
+The terminal will output the endpoint of the S3 static website after execution of `terraform apply`. Copy the endpoint address and paste into browser to visit your static website hosted by S3.
 
 ## Least privilege access
 
@@ -90,8 +64,6 @@ Instead of using the credentials of your IAM user with administrator privileges,
 
 Create an IAM policy that contains the following:
 
-IAM policy name - EC2HelloWorld
-
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -99,18 +71,15 @@ IAM policy name - EC2HelloWorld
                 "Sid": "VisualEditor0",
                 "Effect": "Allow",
                 "Action": [
-                    "iam:*",
-                    "ec2:*",
-                    "elasticloadbalancing:*",
-                    "autoscaling:*"
+                    "s3:*",
                 ],
                 "Resource": "*"
             }
         ]
     }
 
-Here, we are creating a policy that can be attached to a user. This policy only allows for actions with IAM and EC2. Considering the administrator user has actions for hundreds of AWS services, this is much more secure in case the credentials for this user are ever compromised.
+Here, we are creating a policy that can be attached to a user. This policy only allows for actions with S3. Considering the administrator user has permission to all actions for hundreds of AWS services, this is more secure in case the credentials for this user are ever compromised.
 
 ### Attach policy to new IAM user
 
-Attach your EC2HelloWorld policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
+Attach your new policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
