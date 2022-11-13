@@ -68,6 +68,12 @@ EC2 instance type:
 
 Be careful when choosing the EC2 instance type. This is what incurs the cost for this infrastructure.
 
+EC2 instance enhanced monitoring:
+
+    ec2_instance_monitoring = false
+
+Enhanced monitoring costs $2.10 per instance, per month.
+
 ### Initialize Terraform
 
 Initialize a working directory that contains a Terraform configuration:

@@ -194,5 +194,7 @@ resource "aws_instance" "ec2_tf" {
     cpu_credits = "unlimited"
   }
 
+  monitoring = var.ec2_instance_monitoring
+
   user_data = templatefile("user_data.tftpl", {})
 }
