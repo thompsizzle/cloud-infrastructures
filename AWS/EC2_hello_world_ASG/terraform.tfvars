@@ -8,4 +8,5 @@ aws_amis = {
   "us-west-1" = "ami-008b09448b998a562"
   "us-west-2" = "ami-008b09448b998a562"
 }
-ec2_instance_type = "t2.micro"
+ec2_instance_type       = "t2.micro"
+ec2_instance_monitoring = false

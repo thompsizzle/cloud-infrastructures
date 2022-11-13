@@ -179,7 +179,7 @@ resource "aws_launch_template" "lt_tf" {
   }
 
   monitoring {
-    enabled = false
+    enabled = var.ec2_instance_monitoring
   }
 
   tags = {
