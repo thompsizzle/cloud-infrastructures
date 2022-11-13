@@ -32,3 +32,9 @@ variable "ec2_instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+variable "ec2_instance_monitoring" {
+  description = "Enable enhanced monitoring ($2.10/instance/month)"
+  type        = bool
+  default     = false
+}
