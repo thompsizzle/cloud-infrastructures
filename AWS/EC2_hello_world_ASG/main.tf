@@ -165,6 +165,49 @@ resource "aws_route_table_association" "rt_associate_web_b_tf" {
   route_table_id = aws_route_table.rt_web_igw_tf.id
 }
 
+# Create S3 bucket
+resource "aws_s3_bucket" "bucket_logs_tf" {
+  bucket        = "ec2-hello-world-asg-logs-tf"
+  force_destroy = true
+
+  tags = {
+    Name = "Logs Bucket TF"
+  }
+}
+
+# S3 bucket ACL
+resource "aws_s3_bucket_acl" "example_bucket_acl" {
+  bucket = aws_s3_bucket.bucket_logs_tf.id
+  acl    = "log-delivery-write"
+}
+
+# Bucket policy resource
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.bucket_logs_tf.bucket
+  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+}
+
+data "aws_caller_identity" "current" {}
+
+# Bucket policy document
+data "aws_iam_policy_document" "allow_access_from_another_account" {
+
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::127311923021:root"]
+    }
+
+    actions = [
+      "s3:PutObject",
+    ]
+
+    resources = [
+      "${aws_s3_bucket.bucket_logs_tf.arn}/*",
+    ]
+  }
+}
+
 # Launch template for auto scaling group
 resource "aws_launch_template" "lt_tf" {
   name          = "lt-tf"
@@ -211,6 +254,11 @@ resource "aws_lb" "lb_tf" {
   ]
 
   enable_deletion_protection = false
+
+  access_logs {
+    bucket  = aws_s3_bucket.bucket_logs_tf.bucket
+    enabled = true
+  }
 }
 
 # Load balancer listener
