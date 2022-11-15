@@ -38,3 +38,8 @@ variable "ec2_instance_monitoring" {
   type        = bool
   default     = false
 }
+
+variable "aws_elb_account_id" {
+  description = "Map of AWS accounts for Elastic Load Balancing for regions in U.S."
+  type        = map(any)
+}
