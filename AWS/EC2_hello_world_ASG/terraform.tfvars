@@ -10,3 +10,9 @@ aws_amis = {
 }
 ec2_instance_type       = "t2.micro"
 ec2_instance_monitoring = false
+aws_elb_account_id = {
+  "us-east-1" = "127311923021"
+  "us-east-2" = "033677994240"
+  "us-west-1" = "027434742980"
+  "us-west-2" = "797873946194"
+}
