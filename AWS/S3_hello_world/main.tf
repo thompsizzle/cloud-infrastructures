@@ -43,11 +43,10 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
     }
 
     actions = [
-      "s3:*",
+      "s3:GetObject",
     ]
 
     resources = [
-      aws_s3_bucket.bucket_tf.arn,
       "${aws_s3_bucket.bucket_tf.arn}/*",
     ]
   }
