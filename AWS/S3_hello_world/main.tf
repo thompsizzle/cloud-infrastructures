@@ -3,8 +3,7 @@ resource "aws_s3_bucket" "bucket_tf" {
   bucket = var.s3_bucket
 
   tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+    Name = "hello-world-tf"
   }
 }
 
