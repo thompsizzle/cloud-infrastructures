@@ -38,8 +38,8 @@ resource "aws_s3_bucket_versioning" "versioning_tf" {
 data "aws_iam_policy_document" "allow_access_from_another_account" {
   statement {
     principals {
-      type        = "AWS"
-      identifiers = ["*"]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
 
     actions = [
@@ -49,6 +49,12 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
     resources = [
       "${aws_s3_bucket.bucket_tf.arn}/*",
     ]
+
+    condition {
+      test     = "ForAnyValue:StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.s3_distribution.arn]
+    }
   }
 }
 
@@ -74,8 +80,9 @@ resource "aws_s3_object" "object_error" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = aws_s3_bucket.bucket_tf.bucket_regional_domain_name
-    origin_id   = "myS3Origin"
+    domain_name              = aws_s3_bucket.bucket_tf.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.cdn-oac-tf.id
+    origin_id                = "myS3Origin"
   }
 
   enabled             = true
@@ -116,4 +123,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+}
+
+resource "aws_cloudfront_origin_access_control" "cdn-oac-tf" {
+  name                              = "CDN OAC TF"
+  description                       = "Test policy"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
