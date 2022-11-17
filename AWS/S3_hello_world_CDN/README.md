@@ -72,7 +72,7 @@ Create an IAM policy that contains the following:
                 "Effect": "Allow",
                 "Action": [
                     "s3:*",
-                    "cloudfront:*",
+                    "cloudfront:*"
                 ],
                 "Resource": "*"
             }
