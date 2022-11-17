@@ -4,7 +4,7 @@
 
 ## Description
 
-Creates a S3 bucket configured to host a static website and served by CloudFront. A bucket policy is added which is required for the static website to be accessible to the public. An index.html file is uploaded to the bucket as an object to act as the home page of the static website.
+Creates a S3 bucket configured to host a static website and served by CloudFront. The CloudFront distribution is configured with an access control policy. The S3 bucket is not accessible to the public, only to the CloudFront distribution. An index.html file is uploaded to the bucket as an object to act as the home page of the static website.
 
 ## Installation and Usage
 
