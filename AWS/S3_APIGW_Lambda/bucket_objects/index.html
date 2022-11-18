@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>S3 static website</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <div id="error-message"></div>
+    <p>Pressing submit below, sends a GET request to API Gateway. API Gateway triggers Lambda, which responds back to
+        API Gateway. API Gateway Asynchronously returns the response to the site.</p>
+    <input type="submit" value="Submit" id="form-submit">
+    <p>
+    <div id="results-message"></div>
+    </p>
+
+    <script src="js/aws-sdk-2.1256.0.min.js"></script>
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>
