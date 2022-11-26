@@ -25,6 +25,12 @@ variable "availability_zone_2" {
 variable "aws_amis" {
   description = "A map of region-specific AMI IDs"
   type        = map(any)
+  default = {
+    "us-east-1" = "ami-0cff7528ff583bf9a"
+    "us-east-2" = "ami-0ebc8f6f580a04647"
+    "us-west-1" = "ami-008b09448b998a562"
+    "us-west-2" = "ami-008b09448b998a562"
+  }
 }
 
 variable "ec2_instance_type" {
