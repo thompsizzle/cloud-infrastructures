@@ -25,12 +25,18 @@ variable "availability_zone_2" {
 variable "aws_amis" {
   description = "A map of region-specific AMI IDs"
   type        = map(any)
+  default = {
+    "us-east-1" = "ami-0cff7528ff583bf9a"
+    "us-east-2" = "ami-0ebc8f6f580a04647"
+    "us-west-1" = "ami-008b09448b998a562"
+    "us-west-2" = "ami-008b09448b998a562"
+  }
 }
 
 variable "ec2_instance_type" {
-  description = "Ec2 instance type"
+  description = "EC2 instance type"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }
 
 variable "ec2_instance_monitoring" {
@@ -42,4 +48,10 @@ variable "ec2_instance_monitoring" {
 variable "aws_elb_account_id" {
   description = "Map of AWS accounts for Elastic Load Balancing for regions in U.S."
   type        = map(any)
+  default = {
+    "us-east-1" = "127311923021"
+    "us-east-2" = "033677994240"
+    "us-west-1" = "027434742980"
+    "us-west-2" = "797873946194"
+  }
 }
