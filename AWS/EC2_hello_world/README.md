@@ -1,8 +1,8 @@
 ![version](https://img.shields.io/badge/aws%20provider%20version-4.41.0-blue)
 
-# AWS EC2 Hello World template
+# AWS EC2 Instance template
 
-Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the terminal.
+Creates an AWS infrastructure with an EC2 instance displaying 'Hello World'. Outputs public IP address.
 
 ## Minimal usage
 
