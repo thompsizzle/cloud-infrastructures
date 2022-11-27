@@ -2,9 +2,7 @@ resource "aws_s3_bucket" "bucket_logs_tf" {
   bucket        = "ec2-hello-world-asg-logs-tf"
   force_destroy = true
 
-  tags = {
-    Name = "Logs Bucket TF"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_s3_bucket_acl" "example_bucket_acl" {

@@ -3,9 +3,7 @@ resource "aws_vpc" "vpc_tf" {
   instance_tenancy                 = "default"
   assign_generated_ipv6_cidr_block = true
 
-  tags = {
-    Name = "vpc-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_web_a_tf" {
@@ -14,9 +12,7 @@ resource "aws_subnet" "sn_web_a_tf" {
   availability_zone       = var.availability_zone_1
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "sn-web-a-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_app_a_tf" {
@@ -24,9 +20,7 @@ resource "aws_subnet" "sn_app_a_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 1)
   availability_zone = var.availability_zone_1
 
-  tags = {
-    Name = "sn-app-a-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_db_a_tf" {
@@ -34,9 +28,7 @@ resource "aws_subnet" "sn_db_a_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 2)
   availability_zone = var.availability_zone_1
 
-  tags = {
-    Name = "sn-db-a-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_reserved_a_tf" {
@@ -44,9 +36,7 @@ resource "aws_subnet" "sn_reserved_a_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 3)
   availability_zone = var.availability_zone_1
 
-  tags = {
-    Name = "sn-reserved-a-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_web_b_tf" {
@@ -55,9 +45,7 @@ resource "aws_subnet" "sn_web_b_tf" {
   availability_zone       = var.availability_zone_2
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "sn-web-b-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_app_b_tf" {
@@ -65,9 +53,7 @@ resource "aws_subnet" "sn_app_b_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 5)
   availability_zone = var.availability_zone_2
 
-  tags = {
-    Name = "sn-app-b-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_db_b_tf" {
@@ -75,9 +61,7 @@ resource "aws_subnet" "sn_db_b_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 6)
   availability_zone = var.availability_zone_2
 
-  tags = {
-    Name = "sn-db-b-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_subnet" "sn_reserved_b_tf" {
@@ -85,17 +69,13 @@ resource "aws_subnet" "sn_reserved_b_tf" {
   cidr_block        = cidrsubnet(var.address_space, 4, 7)
   availability_zone = var.availability_zone_2
 
-  tags = {
-    Name = "sn-reserved-b-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_internet_gateway" "vpc_igw_tf" {
   vpc_id = aws_vpc.vpc_tf.id
 
-  tags = {
-    Name = "vpc-igw-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_route_table" "rt_web_igw_tf" {
@@ -106,9 +86,7 @@ resource "aws_route_table" "rt_web_igw_tf" {
     gateway_id = aws_internet_gateway.vpc_igw_tf.id
   }
 
-  tags = {
-    Name = "rt-web-igw-tf"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_route_table_association" "rt_associate_web_a_tf" {

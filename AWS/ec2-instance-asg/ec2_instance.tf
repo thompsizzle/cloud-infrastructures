@@ -44,11 +44,9 @@ resource "aws_launch_template" "lt_tf" {
     enabled = var.ec2_instance_monitoring
   }
 
-  tags = {
-    Name = "launch-template-tf"
-  }
-
   user_data = filebase64("user_data.tftpl")
+
+  tags = local.common_tags
 }
 
 resource "aws_lb_target_group" "lb_tg_tf" {
