@@ -1,4 +1,3 @@
-# Create VPC
 resource "aws_vpc" "vpc_tf" {
   cidr_block                       = var.address_space
   instance_tenancy                 = "default"
@@ -9,7 +8,6 @@ resource "aws_vpc" "vpc_tf" {
   }
 }
 
-# Public web subnet in AZ A
 resource "aws_subnet" "sn_web_a_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = cidrsubnet(var.address_space, 4, 0)
@@ -21,7 +19,6 @@ resource "aws_subnet" "sn_web_a_tf" {
   }
 }
 
-# Private app subnet in AZ A
 resource "aws_subnet" "sn_app_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 1)
@@ -32,7 +29,6 @@ resource "aws_subnet" "sn_app_a_tf" {
   }
 }
 
-# Private db subnet in AZ A
 resource "aws_subnet" "sn_db_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 2)
@@ -43,7 +39,6 @@ resource "aws_subnet" "sn_db_a_tf" {
   }
 }
 
-# Private reserved subnet in AZ A
 resource "aws_subnet" "sn_reserved_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 3)
@@ -54,7 +49,6 @@ resource "aws_subnet" "sn_reserved_a_tf" {
   }
 }
 
-# Public web subnet in AZ B
 resource "aws_subnet" "sn_web_b_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = cidrsubnet(var.address_space, 4, 4)
@@ -66,7 +60,6 @@ resource "aws_subnet" "sn_web_b_tf" {
   }
 }
 
-# Private app subnet in AZ B
 resource "aws_subnet" "sn_app_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 5)
@@ -77,7 +70,6 @@ resource "aws_subnet" "sn_app_b_tf" {
   }
 }
 
-# Private db subnet in AZ B
 resource "aws_subnet" "sn_db_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 6)
@@ -88,7 +80,6 @@ resource "aws_subnet" "sn_db_b_tf" {
   }
 }
 
-# Private reserved subnet in AZ B
 resource "aws_subnet" "sn_reserved_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 7)
@@ -99,7 +90,6 @@ resource "aws_subnet" "sn_reserved_b_tf" {
   }
 }
 
-# Internet gateway attached to new VPC
 resource "aws_internet_gateway" "vpc_igw_tf" {
   vpc_id = aws_vpc.vpc_tf.id
 
@@ -108,7 +98,6 @@ resource "aws_internet_gateway" "vpc_igw_tf" {
   }
 }
 
-# Security group to access instances inside the public subnets using HTTP
 resource "aws_security_group" "ec2_public_access_tf" {
   name        = "EC2PublicAccessTF"
   description = "Allow HTTP inbound"
@@ -139,7 +128,6 @@ resource "aws_security_group" "ec2_public_access_tf" {
   }
 }
 
-# Route table for web subnets
 resource "aws_route_table" "rt_web_igw_tf" {
   vpc_id = aws_vpc.vpc_tf.id
 
@@ -153,19 +141,16 @@ resource "aws_route_table" "rt_web_igw_tf" {
   }
 }
 
-# Associate route table with web a subnet
 resource "aws_route_table_association" "rt_associate_web_a_tf" {
   subnet_id      = aws_subnet.sn_web_a_tf.id
   route_table_id = aws_route_table.rt_web_igw_tf.id
 }
 
-# Associate route table with web b subnet
 resource "aws_route_table_association" "rt_associate_web_b_tf" {
   subnet_id      = aws_subnet.sn_web_b_tf.id
   route_table_id = aws_route_table.rt_web_igw_tf.id
 }
 
-# Create S3 bucket
 resource "aws_s3_bucket" "bucket_logs_tf" {
   bucket        = "ec2-hello-world-asg-logs-tf"
   force_destroy = true
@@ -175,13 +160,11 @@ resource "aws_s3_bucket" "bucket_logs_tf" {
   }
 }
 
-# S3 bucket ACL
 resource "aws_s3_bucket_acl" "example_bucket_acl" {
   bucket = aws_s3_bucket.bucket_logs_tf.id
   acl    = "log-delivery-write"
 }
 
-# Bucket policy resource
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.bucket_logs_tf.bucket
   policy = data.aws_iam_policy_document.allow_access_from_another_account.json
@@ -189,7 +172,6 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
 
 data "aws_caller_identity" "current" {}
 
-# Bucket policy document
 data "aws_iam_policy_document" "allow_access_from_another_account" {
 
   statement {
@@ -208,7 +190,6 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
   }
 }
 
-# Launch template for auto scaling group
 resource "aws_launch_template" "lt_tf" {
   name          = "lt-tf"
   image_id      = lookup(var.aws_amis, var.aws_region)
@@ -232,7 +213,6 @@ resource "aws_launch_template" "lt_tf" {
   user_data = filebase64("user_data.tftpl")
 }
 
-# Load balancer target group
 resource "aws_lb_target_group" "lb_tg_tf" {
   name     = "lb-tg-tf"
   port     = 80
@@ -240,7 +220,6 @@ resource "aws_lb_target_group" "lb_tg_tf" {
   vpc_id   = aws_vpc.vpc_tf.id
 }
 
-# Load balancer
 resource "aws_lb" "lb_tf" {
   name               = "lb-tf"
   internal           = false
@@ -261,7 +240,6 @@ resource "aws_lb" "lb_tf" {
   }
 }
 
-# Load balancer listener
 resource "aws_lb_listener" "lb_listener_tf" {
   load_balancer_arn = aws_lb.lb_tf.arn
   port              = "80"
@@ -273,7 +251,6 @@ resource "aws_lb_listener" "lb_listener_tf" {
   }
 }
 
-# Auto scaling group
 resource "aws_autoscaling_group" "asg_tf" {
   name = "asg-tf"
   vpc_zone_identifier = [
