@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "bucket_logs_tf" {
   tags = local.common_tags
 }
 
-resource "aws_s3_bucket_acl" "example_bucket_acl" {
+resource "aws_s3_bucket_acl" "bucket_acl" {
   bucket = aws_s3_bucket.bucket_logs_tf.id
   acl    = "log-delivery-write"
 }
