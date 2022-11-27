@@ -124,3 +124,61 @@ Here, we are creating a policy that can be attached to a user. This policy only 
 ### Attach policy to new IAM user
 
 Attach your new policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
+
+### Connect to S3 backend for state storage
+
+Update backend.tf to the following:
+
+    # terraform {
+    #     backend "local" {
+    #         path = "terraform.tfstate"
+    #     }
+    # }
+
+    terraform {
+      backend "s3" {
+        bucket = "tf-state-00000" <-- change to value used for s3 bucket name.
+        key    = "state_tf"
+        region = "us-east-1"
+      }
+    }
+
+Replace the value for `bucket` with variable used for s3_state_bucket.
+
+Run the following command to reconfigure Terraform:
+
+    terraform init -reconfigure
+
+When prompted:
+
+    Do you want to copy existing state to the new backend?
+    Enter a value: yes
+
+You now have your terraform state file being stored in S3. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion. The original terraform state, before the migration to S3 is still saved in terraform.tfstate.backup.
+
+Important! Now that we are storing the state file in S3, we will need to migrate the state locally before running a `terraform destroy`.
+
+Before running `terraform destroy`, copy the current state back to our local terraform.tfstate file.
+
+    terraform state pull > terraform.tfstate
+
+Your terraform state is now being stored locally again.
+
+Comment out the code within backend.tf and reconfigure Terraform to use our local as its backend.
+
+    terraform {
+        backend "local" {
+            path = "terraform.tfstate"
+        }
+    }
+
+    # terraform {
+    #   backend "s3" {
+    #     bucket = "tf-state-00000"
+    #     key    = "ec2-template/terraform.tfstate"
+    #     region = "us-east-1"
+    #   }
+    # }
+
+
+    terraform init -migrate-state
