@@ -4,13 +4,15 @@
 
 Creates an AWS infrastructure with an EC2 instance, which displays Hello World. Returns the public IP address to the terminal.
 
-## minimal usage
+## Minimal usage
 
-### Inside terraform.tfvars
+terraform.tfvars
 
     s3_state_bucket = "tf-state-12345"
 
-### Inside terraform.tfvars
+## Advanced usage
+
+terraform.tfvars
 
     s3_state_bucket     = "tf-state-12345"
     aws_region          = "us-west-1"
