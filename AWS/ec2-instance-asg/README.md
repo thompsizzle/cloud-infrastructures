@@ -105,6 +105,7 @@ Create an IAM policy that contains the following:
                 "Action": [
                     "iam:*",
                     "ec2:*",
+                    "s3:*",
                     "elasticloadbalancing:*",
                     "autoscaling:*"
                 ],
