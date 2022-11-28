@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket_tf" {
-  bucket        = var.s3_state_bucket
+  bucket        = "tf-state-${random_integer.bucket.result}"
   force_destroy = true
 
   tags = local.common_tags

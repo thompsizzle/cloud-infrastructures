@@ -44,8 +44,3 @@ variable "ec2_instance_monitoring" {
   type        = bool
   default     = false
 }
-
-variable "s3_state_bucket" {
-  description = "Name of S3 bucket to store Terraform state file"
-  type        = string
-}

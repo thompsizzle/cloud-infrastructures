@@ -2,19 +2,12 @@
 
 # AWS EC2 Instance template
 
-Creates an AWS infrastructure with an EC2 instance displaying 'Hello World'. Outputs public IP address.
+Creates an AWS infrastructure with an EC2 instance displaying 'Hello World'.
 
-## Minimal usage
-
-terraform.tfvars
-
-    s3_state_bucket = "tf-state-12345"
-
-## Advanced usage
+## Usage
 
 terraform.tfvars
 
-    s3_state_bucket     = "tf-state-12345"
     aws_region          = "us-west-1"
     address_space       = "10.10.0.0/16"
     availability_zone_1 = "us-west-1a"
@@ -40,7 +33,7 @@ Update backend.tf to the following:
 
     terraform {
       backend "s3" {
-        bucket = "tf-state-12345" <-- change to value used for s3 bucket name.
+        bucket = "tf-state-12345" <-- change to state_bucket_id output value.
         key    = "state_tf"
         region = "us-east-1"
       }
@@ -161,6 +154,7 @@ Note: .gitignore has references to this key using the exact name of the key in t
 | [aws_s3_bucket.bucket_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_versioning.versioning_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
 | [aws_s3_bucket_public_access_block.private_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
+| [random_integer.bucket](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 
 ## Inputs
 
@@ -179,4 +173,5 @@ Note: .gitignore has references to this key using the exact name of the key in t
 
 | Name | Description |
 |------|------|
-| public_ip | Public IP of EC2 instance |
+| public_ip | Public IP of EC2 instance. |
+| state_bucket_id | ID of S3 bucket created in case user wants to store state in S3 bucket. |
