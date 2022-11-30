@@ -22,65 +22,6 @@ terraform.tfvars
     ec2_instance_type       = "t3.micro"
     ec2_instance_monitoring = true
 
-## Use S3 backend for state storage and DynamoDB lock scenerio
-
-Update backend.tf to the following:
-
-    # terraform {
-    #     backend "local" {
-    #         path = "terraform.tfstate"
-    #     }
-    # }
-
-    terraform {
-      backend "s3" {
-        bucket = "tf-state-12345" <-- change to state_bucket_id output value.
-        key    = "state_tf"
-        region = "us-east-1"
-      }
-    }
-
-Replace the value for `bucket` with variable used for s3_state_bucket.
-
-Run the following command to reconfigure Terraform:
-
-    terraform init -reconfigure
-
-When prompted:
-
-    Do you want to copy existing state to the new backend?
-    Enter a value: yes
-
-You now have your terraform state file being stored in S3. The lock file will be stored in DynamoDB. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion.
-
-Important! Now that we are storing the state file in S3, we will need to migrate the state locally before running a `terraform destroy`.
-
-Before running `terraform destroy`, copy the current state back to our local terraform.tfstate file.
-
-    terraform state pull > terraform.tfstate
-
-Your terraform state is now being stored locally again.
-
-Comment out the code within backend.tf and reconfigure Terraform to use our local as its backend.
-
-    terraform {
-        backend "local" {
-            path = "terraform.tfstate"
-        }
-    }
-
-    # terraform {
-    #   backend "s3" {
-    #     bucket = "tf-state-12345"
-    #     key    = "ec2-template/terraform.tfstate"
-    #     region = "us-east-1"
-    #   }
-    # }
-
-Run the following to stop using S3 as backend and use local.
-
-    terraform init -migrate-state
-
 ## IAM policy least privilege access
 
 Instead of using the credentials of an IAM user with administrator privileges, use an IAM user with the minimal permissions needed to complete the tasks. We should use an IAM user with just enough permission to build the infrastructure we have defined in this template.
@@ -177,3 +118,62 @@ Note: .gitignore has references to this key using the exact name of the key in t
 |------|------|
 | public_ip | Public IP of EC2 instance. |
 | state_bucket_id | ID of S3 bucket created in case user wants to store state in S3 bucket. |
+
+## Use S3 backend for state storage and DynamoDB lock scenerio
+
+Update backend.tf to the following:
+
+    # terraform {
+    #     backend "local" {
+    #         path = "terraform.tfstate"
+    #     }
+    # }
+
+    terraform {
+      backend "s3" {
+        bucket = "tf-state-12345" <-- change to state_bucket_id output value.
+        key    = "state_tf"
+        region = "us-east-1"
+      }
+    }
+
+Replace the value for `bucket` with variable used for s3_state_bucket.
+
+Run the following command to reconfigure Terraform:
+
+    terraform init -reconfigure
+
+When prompted:
+
+    Do you want to copy existing state to the new backend?
+    Enter a value: yes
+
+You now have your terraform state file being stored in S3. The lock file will be stored in DynamoDB. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion.
+
+Important! Now that we are storing the state file in S3, we will need to migrate the state locally before running a `terraform destroy`.
+
+Before running `terraform destroy`, copy the current state back to our local terraform.tfstate file.
+
+    terraform state pull > terraform.tfstate
+
+Your terraform state is now being stored locally again.
+
+Comment out the code within backend.tf and reconfigure Terraform to use our local as its backend.
+
+    terraform {
+        backend "local" {
+            path = "terraform.tfstate"
+        }
+    }
+
+    # terraform {
+    #   backend "s3" {
+    #     bucket = "tf-state-12345"
+    #     key    = "ec2-template/terraform.tfstate"
+    #     region = "us-east-1"
+    #   }
+    # }
+
+Run the following to stop using S3 as backend and use local.
+
+    terraform init -migrate-state
