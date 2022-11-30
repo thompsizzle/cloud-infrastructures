@@ -1,4 +1,5 @@
-![version](https://img.shields.io/badge/aws%20provider%20version-4.41.0-blue)
+![version](https://img.shields.io/badge/hashicorp/aws-v4.41.0-blue)
+![version](https://img.shields.io/badge/hashicorp/random-v3.4.3-blue)
 
 # AWS EC2 Instance template
 
@@ -21,7 +22,7 @@ terraform.tfvars
     ec2_instance_type       = "t3.micro"
     ec2_instance_monitoring = true
 
-## Use S3 backend for state storage scenerio
+## Use S3 backend for state storage and DynamoDB lock scenerio
 
 Update backend.tf to the following:
 
@@ -50,7 +51,7 @@ When prompted:
     Do you want to copy existing state to the new backend?
     Enter a value: yes
 
-You now have your terraform state file being stored in S3. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion. The original terraform state, before the migration to S3 is still saved in terraform.tfstate.backup.
+You now have your terraform state file being stored in S3. The lock file will be stored in DynamoDB. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion.
 
 Important! Now that we are storing the state file in S3, we will need to migrate the state locally before running a `terraform destroy`.
 
@@ -93,7 +94,8 @@ Instead of using the credentials of an IAM user with administrator privileges, u
                 "Action": [
                     "iam:*",
                     "ec2:*",
-                    "s3:*"
+                    "s3:*",
+                    "dynamodb:*"
                 ],
                 "Resource": "*"
             }
