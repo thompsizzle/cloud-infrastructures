@@ -112,7 +112,6 @@ Note: .gitignore has references to this key using the exact name of the key in t
 | aws_amis | A map of region-specific AMI IDs. | `list(map(string))` | <pre>[<br>  {<br>    "us-east-1" = "ami-0cff7528ff583bf9a"<br>    "us-east-2" = "ami-0ebc8f6f580a04647"<br>    "us-west-1" = "ami-008b09448b998a562"<br>    "us-west-2" = "ami-008b09448b998a562"<br>  }<br>]</pre> | no |
 | ec2_instance_type | EC2 instance type. | `string` | `"t3.micro"` | no |
 | ec2_instance_monitoring | Enable enhanced monitoring ($2.10/instance/month). | `bool` | `false` | no |
-| s3_state_bucket | Name of S3 bucket to store Terraform state file. | `string` | `null` | yes |
 
 ## Outputs
 
