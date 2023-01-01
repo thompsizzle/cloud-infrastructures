@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/hashicorp/aws-v4.43.0-blue)
+![version](https://img.shields.io/badge/hashicorp/aws-v4.48.0-blue)
 ![version](https://img.shields.io/badge/hashicorp/random-v3.4.3-blue)
 
 # AWS EC2 Instance template
