@@ -6,7 +6,7 @@ terraform {
 
 # terraform {
 #   backend "s3" {
-#     bucket = "tf-state-26004"
+#     bucket = "REPLACE_ME"
 #     key    = "ec2-instance-asg-template/terraform.tfstate"
 #     region = "us-east-1"
 #   }

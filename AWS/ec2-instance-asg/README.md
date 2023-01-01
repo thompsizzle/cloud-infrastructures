@@ -151,8 +151,8 @@ Update backend.tf to the following:
 
     terraform {
       backend "s3" {
-        bucket = "tf-state-12345" <-- change to state_bucket_id output value.
-        key    = "state_tf"
+        bucket = "REPLACE_ME" <-- change to state_bucket_id output value.
+        key    = "ec2-instance-asg-template/terraform.tfstate"
         region = "us-east-1"
       }
     }
@@ -188,8 +188,8 @@ Comment out the code within backend.tf and reconfigure Terraform to use our loca
 
     # terraform {
     #   backend "s3" {
-    #     bucket = "tf-state-12345"
-    #     key    = "ec2-template/terraform.tfstate"
+    #     bucket = "REPLACE_ME"
+    #     key    = "ec2-instance-asg-template/terraform.tfstate"
     #     region = "us-east-1"
     #   }
     # }
