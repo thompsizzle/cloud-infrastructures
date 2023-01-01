@@ -5,3 +5,7 @@ output "s3_static_website_endpoint" {
 output "distribution_domain_name" {
   value = aws_cloudfront_distribution.s3_distribution.domain_name
 }
+
+output "state_bucket_id" {
+  value = aws_s3_bucket.state_bucket_tf.id
+}
