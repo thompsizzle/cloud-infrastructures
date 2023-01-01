@@ -121,6 +121,15 @@ Note: .gitignore has references to this key using the exact name of the key in t
 | public_ip | Public IP of EC2 instance. |
 | state_bucket_id | ID of S3 bucket created in case user wants to store state in S3 bucket. |
 
+## Compatible regions
+
+| Region |
+|------|
+| us-east-1 |
+| us-east-2 |
+| us-west-1 |
+| us-west-2 |
+
 ## Use S3 backend for state storage and DynamoDB lock scenerio
 
 Update backend.tf to the following:
