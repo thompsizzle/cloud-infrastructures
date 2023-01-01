@@ -144,7 +144,7 @@ Update backend.tf to the following:
     terraform {
       backend "s3" {
         bucket = "REPLACE_ME" <-- change to state_bucket_id output value.
-        key    = "state_tf"
+        key    = "ec2-instance-template/terraform.tfstate"
         region = "us-east-1"
       }
     }
