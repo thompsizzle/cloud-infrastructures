@@ -1,80 +1,32 @@
-![version](https://img.shields.io/badge/aws%20provider%20version-4.39.0-blue)
+![version](https://img.shields.io/badge/hashicorp/aws-v4.48.0-blue)
+![version](https://img.shields.io/badge/hashicorp/random-v3.4.3-blue)
 
 # AWS S3 Hello World static website with API Gateway and Lambda
 
-## Description
-
 Creates a S3 bucket configured to host a static website. The site communicates asynchronously with API Gateway, which triggers a Lambda function. The Lambda function returns a 'hello world' string back through API Gateway and then through to the S3 static website to display for users.
 
-## Installation and Usage
+## Usage
 
-### Install AWS CLI
+terraform.tfvars
 
-In order to communicate with the AWS API, you will need to install the AWS CLI. Click on the following link for instructions:
+    s3_bucket = "example-bucket-tf123"
 
-https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+## IAM policy least privilege access
 
-### Configure AWS credentials
-
-Before using this template, you need to configure your AWS credentials.
-
-    aws configure
-
-For more help configuring your AWS credentials: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
-
-### Install Terraform CLI
-
-Please install Terraform on your local machine. Click on the following link for instructions:
-
-https://www.terraform.io/downloads
-
-### Available variables
-
-Customize Terraform variables in terraform.tfvars.
-
-Coming soon.
-
-### Initialize Terraform
-
-Initialize a working directory that contains a Terraform configuration:
-
-    terraform init
-
-### Plan your Terraform
-
-Create an execution plan and preview the changes that Terraform plans to make to your infrastructure:
-
-    terraform plan
-
-### Execute your Terraform
-
-Execute the actions proposed in a Terraform plan:
-
-    terraform apply
-
-### Terraform output
-
-The terminal will output the endpoint of the S3 static website and distribution domain name after execution of `terraform apply`. Copy the either endpoint address and paste into browser to visit your static website hosted by S3 and website served by CloudFront.
-
-## Least privilege access
-
-Instead of using the credentials of your IAM user with administrator privileges, use an IAM user with much less permission. We should use an IAM user with just enough permission to build the infrastructure we have defined in this template. If you would like to practice the principle of least privilege, follow these steps.
-
-### Create an IAM policy
-
-Create an IAM policy that contains the following:
+Instead of using the credentials of an IAM user with administrator privileges, use an IAM user with the minimal permissions needed to complete the tasks. We should use an IAM user with just enough permission to build the infrastructure we have defined in this template.
 
     {
         "Version": "2012-10-17",
         "Statement": [
             {
-                "Sid": "VisualEditor0",
+                "Sid": "S3StaticWebsiteTemplateAccess",
                 "Effect": "Allow",
                 "Action": [
                     "s3:*",
                     "ec2:*",
                     "iam:*",
                     "lambda:*",
+                    "dynamodb:*",
                     "apigateway:*"
                 ],
                 "Resource": "*"
@@ -82,8 +34,144 @@ Create an IAM policy that contains the following:
         ]
     }
 
-Here, we are creating a policy that can be attached to a user. This policy only allows for actions with S3 and CloudFront. Considering the administrator user has permission to all actions for hundreds of AWS services, this is more secure in case the credentials for this user are ever compromised.
+Considering the administrator user has permission to all actions for hundreds of AWS services, this is more secure in case the credentials for this user are ever compromised.
 
-### Attach policy to new IAM user
+## Requirements
 
-Attach your new policy to a new IAM user. For access type, select access key - Programmatic access. This will provide access keys for the new IAM user to be used when setting up `aws configure`.
+| Name | Version |
+|------|---------|
+| terraform | >= 1.2.4 |
+| aws | >= 4.48.0 |
+| random | >= 3.4.3 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | >= 4.48.0 |
+| random | >= 3.4.3 |
+
+## Backends available
+
+| Name | Type |
+|------|------|
+| [Local](https://developer.hashicorp.com/terraform/language/settings/backends/local) | backend |
+| [S3](https://developer.hashicorp.com/terraform/language/settings/backends/s3) | backend |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_vpc.vpc_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [aws_subnet.sn_web_a_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_app_a_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_db_a_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_reserved_a_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_web_b_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_app_b_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_db_b_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_subnet.sn_reserved_b_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
+| [aws_s3_bucket.bucket_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_website_configuration.bucket_config_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucketaws_s3_bucket_website_configuration) | resource |
+| [aws_s3_bucket_policy.bucket_policy_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) | resource |
+| [aws_s3_bucket_versioning.versioning_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
+| [aws_s3_object.object_index](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object) | resource |
+| [aws_s3_object.object_error](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object) | resource |
+| [aws_s3_object.object_aws_sdk_js](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object) | resource |
+| [aws_api_gateway_rest_api.apigw_tf]() | resource |
+| [aws_api_gateway_resource.resource_tf]() | resource |
+| [aws_api_gateway_method.method_tf]() | resource |
+| [aws_api_gateway_integration.integration_tf]() | resource |
+| [aws_api_gateway_rest_api_policy.apigw_policy_tf]() | resource |
+| [aws_api_gateway_deployment.deployment_tf]() | resource |
+| [aws_api_gateway_stage.stage_tf]() | resource |
+| [aws_ssm_parameter.parameter_store_tf]() | resource |
+| [aws_lambda_permission.apigw_lambda]() | resource |
+| [aws_iam_role.iam_for_lambda]() | resource |
+| [aws_lambda_function.lambda_tf]() | resource |
+| [aws_s3_bucket.state_bucket_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_versioning.state_versioning_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
+| [aws_s3_bucket_public_access_block.private_tf](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
+| [aws_s3_bucket_server_side_encryption_configuration.s3_encryption](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
+| [aws_dynamodb_table.terraform_state_lock](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) | resource |
+| [random_integer.bucket](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| aws_region | AWS region to launch infrastructure. | `string` | `"us-east-1"` | no |
+| s3_bucket | Name of S3 bucket to host static website. | `string` | `null` | yes |
+
+## Outputs
+
+| Name | Description |
+|------|------|
+| s3_static_website_endpoint | Public address of static website. |
+| state_bucket_id | ID of S3 bucket created in case user wants to store state in S3 bucket. |
+
+## Compatible regions
+
+| Region |
+|------|
+| global |
+
+## Use S3 backend for state storage and DynamoDB lock scenerio
+
+Update backend.tf to the following:
+
+    # terraform {
+    #     backend "local" {
+    #         path = "terraform.tfstate"
+    #     }
+    # }
+
+    terraform {
+      backend "s3" {
+        bucket = "REPLACE_ME" <-- change to state_bucket_id output value.
+        key    = "s3-static-website-template/terraform.tfstate"
+        region = "us-east-1"
+      }
+    }
+
+Replace the value for `bucket` with variable used for s3_state_bucket.
+
+Run the following command to reconfigure Terraform:
+
+    terraform init -reconfigure
+
+When prompted:
+
+    Do you want to copy existing state to the new backend?
+    Enter a value: yes
+
+You now have your terraform state file being stored in S3. The lock file will be stored in DynamoDB. The reason I recommend using the -recofigure flag is to empty the local terraform.tfstate file to avoid confusion.
+
+Important! Now that we are storing the state file in S3, we will need to migrate the state locally before running a `terraform destroy`.
+
+Before running `terraform destroy`, copy the current state back to our local terraform.tfstate file.
+
+    terraform state pull > terraform.tfstate
+
+Your terraform state is now being stored locally again.
+
+Comment out the code within backend.tf and reconfigure Terraform to use our local as its backend.
+
+    terraform {
+        backend "local" {
+            path = "terraform.tfstate"
+        }
+    }
+
+    # terraform {
+    #   backend "s3" {
+    #     bucket = "REPLACE_ME"
+    #     key    = "s3-static-website-template/terraform.tfstate"
+    #     region = "us-east-1"
+    #   }
+    # }
+
+Run the following to stop using S3 as backend and use local.
+
+    terraform init -migrate-state
+

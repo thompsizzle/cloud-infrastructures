@@ -33,6 +33,26 @@ resource "aws_api_gateway_integration" "integration_tf" {
   ]
 }
 
+# resource "aws_api_gateway_rest_api_policy" "apigw_policy_tf" {
+#   rest_api_id = aws_api_gateway_rest_api.apigw_tf.id
+
+#   policy = <<EOF
+#   {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#       {
+#         "Effect": "Allow",
+#         "Principal": {
+#           "AWS": "*"
+#         },
+#         "Action": "execute-api:Invoke",
+#         "Resource": "${aws_api_gateway_rest_api.apigw_tf.execution_arn}"
+#       }
+#     ]
+#   }
+#   EOF
+# }
+
 resource "aws_api_gateway_deployment" "deployment_tf" {
   rest_api_id = aws_api_gateway_rest_api.apigw_tf.id
 
@@ -59,7 +79,7 @@ resource "aws_api_gateway_deployment" "deployment_tf" {
 resource "aws_api_gateway_stage" "stage_tf" {
   deployment_id = aws_api_gateway_deployment.deployment_tf.id
   rest_api_id   = aws_api_gateway_rest_api.apigw_tf.id
-  stage_name    = "example"
+  stage_name    = "development"
 }
 
 resource "aws_ssm_parameter" "parameter_store_tf" {

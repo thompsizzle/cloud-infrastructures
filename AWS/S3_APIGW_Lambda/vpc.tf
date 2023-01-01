@@ -1,4 +1,3 @@
-# Create VPC
 resource "aws_vpc" "vpc_tf" {
   cidr_block                       = var.address_space
   instance_tenancy                 = "default"
@@ -9,7 +8,6 @@ resource "aws_vpc" "vpc_tf" {
   }
 }
 
-# Public web subnet in AZ A
 resource "aws_subnet" "sn_web_a_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = cidrsubnet(var.address_space, 4, 0)
@@ -21,7 +19,6 @@ resource "aws_subnet" "sn_web_a_tf" {
   }
 }
 
-# Private app subnet in AZ A
 resource "aws_subnet" "sn_app_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 1)
@@ -32,7 +29,6 @@ resource "aws_subnet" "sn_app_a_tf" {
   }
 }
 
-# Private db subnet in AZ A
 resource "aws_subnet" "sn_db_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 2)
@@ -43,7 +39,6 @@ resource "aws_subnet" "sn_db_a_tf" {
   }
 }
 
-# Private reserved subnet in AZ A
 resource "aws_subnet" "sn_reserved_a_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 3)
@@ -54,7 +49,6 @@ resource "aws_subnet" "sn_reserved_a_tf" {
   }
 }
 
-# Public web subnet in AZ B
 resource "aws_subnet" "sn_web_b_tf" {
   vpc_id                  = aws_vpc.vpc_tf.id
   cidr_block              = cidrsubnet(var.address_space, 4, 4)
@@ -66,7 +60,6 @@ resource "aws_subnet" "sn_web_b_tf" {
   }
 }
 
-# Private app subnet in AZ B
 resource "aws_subnet" "sn_app_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 5)
@@ -77,7 +70,6 @@ resource "aws_subnet" "sn_app_b_tf" {
   }
 }
 
-# Private db subnet in AZ B
 resource "aws_subnet" "sn_db_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 6)
@@ -88,7 +80,6 @@ resource "aws_subnet" "sn_db_b_tf" {
   }
 }
 
-# Private reserved subnet in AZ B
 resource "aws_subnet" "sn_reserved_b_tf" {
   vpc_id            = aws_vpc.vpc_tf.id
   cidr_block        = cidrsubnet(var.address_space, 4, 7)

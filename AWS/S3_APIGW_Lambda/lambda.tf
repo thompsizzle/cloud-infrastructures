@@ -5,7 +5,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
   principal     = "apigateway.amazonaws.com"
 
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  source_arn = "arn:aws:execute-api:${var.aws_region}:929976199501:${aws_api_gateway_rest_api.apigw_tf.id}/*/${aws_api_gateway_method.method_tf.http_method}${aws_api_gateway_resource.resource_tf.path}"
+  source_arn = "arn:aws:execute-api:${var.aws_region}:087563087326:${aws_api_gateway_rest_api.apigw_tf.id}/*/${aws_api_gateway_method.method_tf.http_method}${aws_api_gateway_resource.resource_tf.path}"
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
@@ -16,12 +16,12 @@ resource "aws_iam_role" "iam_for_lambda" {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Action": "sts:AssumeRole",
+        "Sid": "",
+        "Effect": "Allow",
         "Principal": {
           "Service": "lambda.amazonaws.com"
         },
-        "Effect": "Allow",
-        "Sid": ""
+        "Action": "sts:AssumeRole"
       }
     ]
   }

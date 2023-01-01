@@ -1,4 +1,3 @@
-# Create S3 bucket
 resource "aws_s3_bucket" "bucket_tf" {
   bucket = var.s3_bucket
 
@@ -7,7 +6,6 @@ resource "aws_s3_bucket" "bucket_tf" {
   }
 }
 
-# Bucket static website configuration resource
 resource "aws_s3_bucket_website_configuration" "bucket_config_tf" {
   bucket = aws_s3_bucket.bucket_tf.bucket
 
@@ -20,13 +18,11 @@ resource "aws_s3_bucket_website_configuration" "bucket_config_tf" {
   }
 }
 
-# Bucket policy resource
-resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+resource "aws_s3_bucket_policy" "bucket_policy_tf" {
   bucket = aws_s3_bucket.bucket_tf.bucket
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+  policy = data.aws_iam_policy_document.iam_policy_tf.json
 }
 
-# Enable object versioning
 resource "aws_s3_bucket_versioning" "versioning_tf" {
   bucket = aws_s3_bucket.bucket_tf.id
   versioning_configuration {
@@ -34,25 +30,6 @@ resource "aws_s3_bucket_versioning" "versioning_tf" {
   }
 }
 
-# Bucket policy document
-data "aws_iam_policy_document" "allow_access_from_another_account" {
-  statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      "${aws_s3_bucket.bucket_tf.arn}/*",
-    ]
-  }
-}
-
-# Add object to bucket - index.html
 resource "aws_s3_object" "object_index_html" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "index.html"
@@ -62,7 +39,6 @@ resource "aws_s3_object" "object_index_html" {
   etag = filemd5("bucket_objects/index.html")
 }
 
-# Add object to bucket - error.html
 resource "aws_s3_object" "object_error_html" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "error.html"
@@ -72,7 +48,6 @@ resource "aws_s3_object" "object_error_html" {
   etag = filemd5("bucket_objects/error.html")
 }
 
-# Add object to bucket - js/index.js
 resource "aws_s3_object" "object_index_js" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "js/index.js"
@@ -82,7 +57,6 @@ resource "aws_s3_object" "object_index_js" {
   etag = filemd5("bucket_objects/js/index.js")
 }
 
-# Add object to bucket - js/aws-sdk-2.1256.0.min.js
 resource "aws_s3_object" "object_aws_sdk_js" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "js/aws-sdk-2.1256.0.min.js"
@@ -90,4 +64,37 @@ resource "aws_s3_object" "object_aws_sdk_js" {
   content_type = "application/x-javascript"
 
   etag = filemd5("bucket_objects/js/aws-sdk-2.1256.0.min.js")
+}
+
+resource "aws_s3_bucket" "state_bucket_tf" {
+  bucket        = "tf-state-${random_integer.bucket.result}"
+  force_destroy = true
+
+  tags = local.common_tags
+}
+
+resource "aws_s3_bucket_versioning" "state_versioning_tf" {
+  bucket = aws_s3_bucket.state_bucket_tf.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "private_tf" {
+  bucket = aws_s3_bucket.state_bucket_tf.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
+  bucket = aws_s3_bucket.state_bucket_tf.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }

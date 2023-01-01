@@ -1,7 +1,7 @@
 var ssm = new AWS.SSM({
     region: 'us-east-1',
-    accessKeyId: '...',
-    secretAccessKey: '...'
+    accessKeyId: 'AKIARIYZKVXPCH5Y23TT',
+    secretAccessKey: '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'
 });
 
 var params = {
@@ -12,7 +12,7 @@ var params = {
 var API_ENDPOINT = null;
 ssm.getParameter(params, function(err, data) {
     if (err) console.log(err, err.stack);
-    else     API_ENDPOINT = data.Parameter.Value;
+    else API_ENDPOINT = data.Parameter.Value;
 });
 
 // Setup divs that will be used to display interactive messages
