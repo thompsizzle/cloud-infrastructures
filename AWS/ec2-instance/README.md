@@ -50,7 +50,7 @@ Considering the administrator user has permission to all actions for hundreds of
 | Name | Version |
 |------|---------|
 | terraform | >= 1.2.4 |
-| aws | >= 4.43.0 |
+| aws | >= 4.48.0 |
 
 ### Create key for secure connections using SSH
 
@@ -64,7 +64,7 @@ Note: .gitignore has references to this key using the exact name of the key in t
 
 | Name | Version |
 |------|---------|
-| aws | >= 4.43.0 |
+| aws | >= 4.48.0 |
 
 ## Backends available
 
