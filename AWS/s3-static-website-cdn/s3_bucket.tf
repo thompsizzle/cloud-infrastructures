@@ -1,4 +1,3 @@
-# Create S3 bucket
 resource "aws_s3_bucket" "bucket_tf" {
   bucket = var.s3_bucket
 
@@ -7,7 +6,6 @@ resource "aws_s3_bucket" "bucket_tf" {
   }
 }
 
-# Bucket static website configuration resource
 resource "aws_s3_bucket_website_configuration" "bucket_config_tf" {
   bucket = aws_s3_bucket.bucket_tf.bucket
 
@@ -20,13 +18,11 @@ resource "aws_s3_bucket_website_configuration" "bucket_config_tf" {
   }
 }
 
-# Bucket policy resource
 resource "aws_s3_bucket_policy" "bucket_policy_tf" {
   bucket = aws_s3_bucket.bucket_tf.bucket
   policy = data.aws_iam_policy_document.iam_policy_tf.json
 }
 
-# Enable object versioning
 resource "aws_s3_bucket_versioning" "versioning_tf" {
   bucket = aws_s3_bucket.bucket_tf.id
   versioning_configuration {
@@ -34,7 +30,6 @@ resource "aws_s3_bucket_versioning" "versioning_tf" {
   }
 }
 
-# Add object to bucket - index.html
 resource "aws_s3_object" "object_index" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "index.html"
@@ -44,7 +39,6 @@ resource "aws_s3_object" "object_index" {
   etag = filemd5("bucket_objects/index.html")
 }
 
-# Add object to bucket - error.html
 resource "aws_s3_object" "object_error" {
   bucket       = aws_s3_bucket.bucket_tf.bucket
   key          = "error.html"
