@@ -1,7 +1,7 @@
 var ssm = new AWS.SSM({
     region: 'us-east-1',
-    accessKeyId: 'AKIARIYZKVXPCH5Y23TT',
-    secretAccessKey: 'qZfpqMKtwXrXI0X6cVSbwCasHzJe3ii/Hm4ZgrEd'
+    accessKeyId: 'REPLACE_ME',
+    secretAccessKey: 'REPLACE_ME'
 });
 
 var params = {
