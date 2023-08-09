@@ -1,5 +1,5 @@
-![version](https://img.shields.io/badge/hashicorp/aws-v4.48.0-blue)
-![version](https://img.shields.io/badge/hashicorp/random-v3.4.3-blue)
+![version](https://img.shields.io/badge/hashicorp/aws-v5.11.0-blue)
+![version](https://img.shields.io/badge/hashicorp/random-v3.5.1-blue)
 
 # AWS EC2 Instance template
 
@@ -49,9 +49,9 @@ Considering the administrator user has permission to all actions for hundreds of
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.2.4 |
-| aws | >= 4.48.0 |
-| random | >= 3.4.3 |
+| terraform | >= 1.5.4 |
+| aws | >= 5.11.0 |
+| random | >= 3.5.1 |
 
 ### Create key for secure connections using SSH
 
@@ -65,8 +65,8 @@ Note: .gitignore has references to this key using the exact name of the key in t
 
 | Name | Version |
 |------|---------|
-| aws | >= 4.48.0 |
-| random | >= 3.4.3 |
+| aws | >= 5.11.0 |
+| random | >= 3.5.1 |
 
 ## Backends available
 
